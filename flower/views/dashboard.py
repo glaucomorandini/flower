@@ -36,6 +36,10 @@ class DashboardView(BaseHandler):
 
         workers = {}
         for name, values in events.counter.items():
+            logger.debug("++++ name on dashboard")
+            logger.debug(name)
+            logger.debug("++++ values on dashboard")
+            logger.debug(values)
             if name not in events.workers:
                 continue
             worker = events.workers[name]
@@ -43,6 +47,10 @@ class DashboardView(BaseHandler):
             info.update(self._as_dict(worker))
             info.update(status=worker.alive)
             workers[name] = info
+
+        logger.debug("++++ workers to show on dashboard")
+        logger.debug(workers)
+        logger.debug(workers[name])
 
         if json:
             self.write(dict(data=list(workers.values())))
