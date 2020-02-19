@@ -89,6 +89,7 @@ class Events(threading.Thread):
             state.close()
 
         if not self.state:
+            logger.debug("fitas")
             self.state = EventsState(**kwargs)
 
         self.timer = PeriodicCallback(self.on_enable_events,
