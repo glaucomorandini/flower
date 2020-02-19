@@ -58,6 +58,7 @@ class Events(threading.Thread):
 
     def __init__(self, capp, db=None, persistent=False,
                  enable_events=True, io_loop=None, **kwargs):
+        logger.debug("init test")
         threading.Thread.__init__(self)
         self.daemon = True
 
