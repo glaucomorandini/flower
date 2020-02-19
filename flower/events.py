@@ -86,6 +86,8 @@ class Events(threading.Thread):
                 logger.debug('---- state events on start')
                 logger.debug(state['events'])
                 self.state = state['events']
+                logger.debug("---- self.state on start")
+                logger.debug(self.state)
             state.close()
 
         if not self.state:
@@ -109,10 +111,14 @@ class Events(threading.Thread):
             state = shelve.open(self.db)
             logger.debug("---- state db on stop before update")
             logger.debug(state['events'])
-            state = self.state
+            state['events'] = self.state
             logger.debug("---- state db on stop")
             logger.debug(state['events'])
+            state.close()
+            state = shelve.open(self.db)
+            logger.debug("---- open again")
             logger.debug(state)
+            logger.debug(state['events'])
             state.close()
 
     def run(self):
