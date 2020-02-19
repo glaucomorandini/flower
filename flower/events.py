@@ -114,6 +114,7 @@ class Events(threading.Thread):
             state['events'] = self.state
             logger.debug("---- state db on stop")
             logger.debug(state['events'])
+            state.sync()
             state.close()
             state = shelve.open(self.db)
             logger.debug("---- open again")
