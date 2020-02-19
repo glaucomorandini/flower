@@ -58,7 +58,6 @@ class Events(threading.Thread):
 
     def __init__(self, capp, db=None, persistent=False,
                  enable_events=True, io_loop=None, **kwargs):
-        logger.debug("init test")
         threading.Thread.__init__(self)
         self.daemon = True
 
@@ -77,8 +76,15 @@ class Events(threading.Thread):
 
         if self.persistent:
             logger.debug("Loading state from '%s'...", self.db)
+            logger.debug(self.db)
+
             state = shelve.open(self.db)
+            logger.debug('state')
+            logger.debug(state)
+
             if state:
+                logger.debug('state events')
+                logger.debug(state['events'])
                 self.state = state['events']
             state.close()
 
