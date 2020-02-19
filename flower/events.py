@@ -79,17 +79,17 @@ class Events(threading.Thread):
             logger.debug(self.db)
 
             state = shelve.open(self.db)
-            logger.debug('state')
+            logger.debug('---- state on start')
             logger.debug(state)
 
             if state:
-                logger.debug('state events')
+                logger.debug('---- state events on start')
                 logger.debug(state['events'])
                 self.state = state['events']
             state.close()
 
         if not self.state:
-            logger.debug("fitas")
+            logger.debug("---- not state on start")
             self.state = EventsState(**kwargs)
 
         self.timer = PeriodicCallback(self.on_enable_events,
@@ -104,8 +104,12 @@ class Events(threading.Thread):
     def stop(self):
         if self.persistent:
             logger.debug("Saving state to '%s'...", self.db)
+            logger.debug("---- state on stop ")
+            logger.debug(self.state)
             state = shelve.open(self.db)
             state['events'] = self.state
+            logger.debug("---- state db on stop")
+            logger.debug(state['events'])
             state.close()
 
     def run(self):
