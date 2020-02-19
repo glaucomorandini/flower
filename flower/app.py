@@ -26,6 +26,8 @@ class Flower(tornado.web.Application):
 
     def __init__(self, options=None, capp=None, events=None,
                  io_loop=None, **kwargs):
+        logger.debug("==== events on start flower")
+        logger.debug(events)
         kwargs.update(handlers=handlers)
         super(Flower, self).__init__(**kwargs)
         self.options = options or default_options

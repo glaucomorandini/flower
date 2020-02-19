@@ -75,19 +75,22 @@ class Events(threading.Thread):
             self.persistent = False
 
         if self.persistent:
-            logger.debug("Loading state from '%s'...", self.db)
-            logger.debug(self.db)
+            # logger.debug("Loading state from '%s'...", self.db)
+            # logger.debug(self.db)
 
             state = shelve.open(self.db)
-            logger.debug('---- state on start')
-            logger.debug(state)
+            # logger.debug('---- state on start')
+            # logger.debug(state)
 
             if state:
-                logger.debug('---- state events on start')
-                logger.debug(state['events'])
+                # logger.debug('---- state events on start')
+                # logger.debug(state['events'])
                 self.state = state['events']
-                logger.debug("---- self.state on start")
-                logger.debug(self.state)
+                logger.debug("---- workers on start")
+                logger.debug(self.state.workers)
+                logger.debug(state['events'].workers)
+                # logger.debug("---- self.state on start")
+                # logger.debug(self.state)
             state.close()
 
         if not self.state:
@@ -106,23 +109,23 @@ class Events(threading.Thread):
     def stop(self):
         if self.persistent:
             logger.debug("Saving state to '%s'...", self.db)
-            logger.debug("---- state on stop ")
-            logger.debug(self.state)
+            # logger.debug("---- state on stop ")
+            # logger.debug(self.state)
             state = shelve.open(self.db)
-            logger.debug("---- state db on stop before update")
+            # logger.debug("---- state db on stop before update")
             # logger.debug(state['events'])
-            state['events'] = self.state
-            logger.debug("---- state db on stop")
-            logger.debug(state['events'])
+            # state['events'] = self.state
+            # logger.debug("---- state db on stop")
+            # logger.debug(state['events'])
             logger.debug("---- workers on stop")
             logger.debug(self.state.workers)
             logger.debug(state['events'].workers)
             state.sync()
             state.close()
             state = shelve.open(self.db)
-            logger.debug("---- open again")
-            logger.debug(state)
-            logger.debug(state['events'])
+            # logger.debug("---- open again")
+            # logger.debug(state)
+            # logger.debug(state['events'])
             state.close()
 
     def run(self):
